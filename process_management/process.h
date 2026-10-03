@@ -1,6 +1,8 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-void create_processes();
+#include "../src/student.h"
+
+void create_process(const Student *students, int count);
 
 #endif

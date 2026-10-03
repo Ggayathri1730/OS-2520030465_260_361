@@ -1,144 +1,167 @@
-# OS-2520030465_260_361
 # Multithreaded Linux Application Using POSIX Threads and Mutexes
 
 ## Operating Systems and Systems Programming Project
 
----
+## 1. Project Overview
 
-## 📌 Project Title
+This project is a multithreaded Linux application developed in C
+using POSIX threads, mutex synchronization and process management.
 
-**Multithreaded Linux Application Using POSIX Threads and Mutexes**
+The application accepts student academic and attendance records,
+calculates marks and attendance concurrently, and generates a
+consolidated report.
 
----
+It demonstrates operating system concepts including process
+creation, thread management, synchronization, dynamic memory
+allocation and file handling.
 
-## 📖 Abstract
+## 2. Objectives
 
-This project focuses on developing a multithreaded Linux application that demonstrates concurrent task processing using POSIX threads and mutex-based synchronization. Traditional single-threaded applications process tasks sequentially, which can reduce efficiency when multiple tasks need to be handled simultaneously. In a multithreaded environment, concurrent access to shared data can also cause race conditions and inconsistent results if synchronization is not properly implemented.
+- Develop a C application for Linux.
+- Create a child process using fork().
+- Manage process completion using waitpid().
+- Execute marks and attendance calculations using POSIX threads.
+- Use a mutex to protect a shared worker-completion counter.
+- Allocate and release memory dynamically.
+- Generate a report containing the processed student records.
 
-The proposed system uses multiple POSIX threads to execute tasks concurrently while mutexes protect shared resources and critical sections. The project will demonstrate thread creation, execution, synchronization, shared-data access, race conditions, and mutual exclusion. The application will be implemented as a user-space Linux application using the C programming language and POSIX thread APIs.
+## 3. Technologies Used
 
-The system will compare unsynchronized execution with mutex-protected execution to demonstrate the importance of synchronization in concurrent programs. Different thread counts and workloads will be tested to observe application behavior and performance. The expected outcome is a functional Linux-based multithreaded application that safely performs concurrent tasks while maintaining data consistency and providing practical understanding of POSIX threads, race conditions, critical sections, mutexes, and thread synchronization.
+- Operating System: Ubuntu Linux (WSL 2)
+- Programming Language: C
+- Compiler: GCC
+- Build System: GNU Make
+- Thread Library: POSIX Threads (pthreads)
+- Process Management: fork(), waitpid()
+- Synchronization: POSIX Mutex
+- File Handling: C standard I/O
 
----
+## 4. Application Workflow
 
-# 1. Problem Statement
+1. Accept student details from the user.
+2. Allocate memory for student records.
+3. Create a child process using fork().
+4. Display student record information in the child process.
+5. Wait for the child process to complete.
+6. Create worker threads for marks and attendance calculations.
+7. Use a mutex to synchronize access to the shared worker counter.
+8. Join the worker threads.
+9. Display the calculated student results.
+10. Save the report to output/student_report.txt.
+11. Release dynamically allocated memory.
 
-Traditional single-threaded applications execute tasks sequentially, which can limit efficient handling of multiple tasks. Multithreading allows multiple tasks to execute concurrently, but concurrent access to shared resources can create problems such as race conditions, inconsistent data, and unpredictable program behavior.
+## 5. Main Modules
 
-This project aims to address these issues by developing a Linux-based multithreaded application using POSIX threads. Multiple worker threads will execute tasks concurrently and access shared resources. Mutex-based synchronization will be implemented to protect critical sections and ensure that shared data is accessed safely.
+### Student Input
+Accepts student IDs, names, subject marks and attendance
+details, with input validation.
 
-The project will also demonstrate the difference between concurrent execution without synchronization and execution with mutex protection, showing how mutual exclusion helps maintain correct and consistent results.
+### Process Management
+Uses fork() to create a child process and waitpid() to
+wait for its completion.
 
----
+### Multithreading and Synchronization
+Uses two POSIX worker threads:
+- Marks calculation
+- Attendance calculation
 
-# 2. Objectives
+A mutex protects the shared worker-completion counter.
 
-The objectives of this project are:
+### Memory Management
+Uses dynamic memory allocation and releases allocated
+memory after processing.
 
-1. To develop a Linux-based multithreaded application using POSIX threads.
-2. To create and manage multiple threads for concurrent task execution.
-3. To demonstrate concurrent access to shared data and the occurrence of race conditions.
-4. To implement mutex-based synchronization for protecting critical sections.
-5. To prevent inconsistent shared-data access using mutual exclusion.
-6. To compare the behavior of synchronized and unsynchronized multithreaded execution.
-7. To test the application using different thread counts and workloads.
-8. To provide practical understanding of multithreading and synchronization concepts in Linux.
+### Report Generation
+Writes student marks, averages and attendance details
+to output/student_report.txt.
 
----
+## 6. Project Structure
 
-# 3. Proposed Approach / Methodology
+task_processing_system/
+├── src/
+│   ├── main.c
+│   ├── student.h
+│   ├── student_input.c
+│   ├── student_input.h
+│   ├── student_processing.c
+│   ├── student_processing.h
+│   ├── memory.c
+│   ├── memory.h
+│   ├── report.c
+│   └── report.h
+├── process_management/
+│   ├── process.c
+│   └── process.h
+├── tests/
+├── output/
+│   └── student_report.txt
+├── archive/
+├── Makefile
+└── README.md
 
-The project will be implemented as a user-space Linux application using the C programming language and POSIX thread libraries.
+## 7. Compilation
 
-### Step 1: Application Design
+Open the project directory in the Ubuntu terminal:
 
-The application will be designed with multiple worker threads and shared data. Each thread will perform assigned operations concurrently.
+    cd "$HOME/OS Project/task_processing_system"
 
-### Step 2: Thread Creation
+Compile the application:
 
-Multiple worker threads will be created using the POSIX thread library. Each thread will receive a task or workload to execute.
+    make
 
-### Step 3: Concurrent Execution
+## 8. Execution
 
-The worker threads will execute simultaneously. Their execution and behavior will be observed during concurrent access to shared data.
+Run the application:
 
-### Step 4: Race Condition Demonstration
+    ./task_processing_system
 
-The application will first execute operations without proper synchronization. This will demonstrate how multiple threads accessing shared data simultaneously may produce inconsistent results.
+Enter the requested student details when prompted.
 
-### Step 5: Critical Section Identification
+## 9. Generated Output
 
-The portion of the program that accesses or modifies shared data will be identified as the critical section.
+The application generates a student performance report at:
 
-### Step 6: Mutex-Based Synchronization
+    output/student_report.txt
 
-A mutex will be implemented to protect the critical section. A thread must acquire the mutex before accessing shared data and release it after completing the operation.
+The report includes:
+- Student ID and name
+- Subject-wise marks
+- Total marks
+- Average marks
+- Total classes
+- Classes attended
+- Attendance percentage
 
-### Step 7: Result Comparison
+## 10. Verified Execution
 
-The application will compare:
+The application was tested with a sample student record.
 
-- Execution without synchronization
-- Execution with mutex synchronization
+Student ID: 101
+Name: Gayathri
+Subject marks: 85, 90, 88
+Total marks: 263
+Average: 87.67
+Total classes: 100
+Classes attended: 92
+Attendance: 92%
 
-The results will be analyzed to demonstrate the importance of mutual exclusion and synchronization.
+The child process completed with exit status 0.
+Both worker threads completed, the report was saved,
+and allocated memory was released.
 
-### Step 8: Testing
+## 11. Current Scope
 
-The application will be tested using different:
+The current implementation demonstrates process creation,
+thread execution, mutex synchronization, student data
+processing, report generation and dynamic memory management.
 
-- Numbers of threads
-- Numbers of tasks
-- Workload sizes
+A separate comparison of synchronized and unsynchronized
+execution and experiments with different thread counts
+are not included in the verified application workflow.
 
-The correctness and behavior of the application will be observed and documented.
+## 12. Conclusion
 
----
-
-## 🔄 Project Workflow
-
-```text
-                +----------------+
-                |   Task Input   |
-                +-------+--------+
-                        |
-                        v
-                +----------------+
-                | Create Threads |
-                +-------+--------+
-                        |
-                        v
-                +----------------------+
-                | Concurrent Execution |
-                +----------+-----------+
-                           |
-                           v
-                +----------------------+
-                | Access Shared Data   |
-                +----------+-----------+
-                           |
-                           v
-                  +------------------+
-                  | Mutex Protection |
-                  +--------+---------+
-                           |
-                           v
-                +----------------------+
-                | Critical Section     |
-                +----------+-----------+
-                           |
-                           v
-                  +------------------+
-                  | Release Mutex    |
-                  +--------+---------+
-                           |
-                           v
-                +----------------------+
-                | Thread Completion    |
-                +----------+-----------+
-                           |
-                           v
-                +----------------------+
-                | Display Results and  |
-                | Analyze Behavior     |
-                +----------------------+
+The project demonstrates the use of Linux system programming
+and POSIX APIs in a practical C application. It integrates
+process management, concurrent processing, synchronization,
+memory management and file handling into one application.

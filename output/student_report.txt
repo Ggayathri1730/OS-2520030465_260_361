@@ -1,0 +1,13 @@
+===== STUDENT PERFORMANCE REPORT =====
+
+Student ID: 101
+Name: gayathri
+Subject 1 Marks: 85.00
+Subject 2 Marks: 90.00
+Subject 3 Marks: 88.00
+Total Marks: 263.00
+Average: 87.67
+Total Classes: 100
+Classes Attended: 92
+Attendance: 92.00%
+-----------------------------------

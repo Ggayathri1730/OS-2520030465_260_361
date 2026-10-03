@@ -1,0 +1,13 @@
+# Compiled object files
+*.o
+
+# Compiled application
+/task_processing_system
+
+# Compiled test executables
+/test_memory
+/test_process
+/test_student_input
+/test_student_processing
+/test_task_input
+/test_threads
